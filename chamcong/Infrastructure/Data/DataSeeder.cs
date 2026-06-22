@@ -49,6 +49,46 @@ namespace chamcong.Infrastructure.Data
                     context.Bundles.Add(new Bundle { BatchId = batch1.Id, BundleNumber = i, StepName = "May Cổ Áo", StepPrice = 1000, Quantity = 10, Status = 0 });
                 }
                 context.SaveChanges();
+
+                // Create Accounts
+                if (!context.Accounts.Any())
+                {
+                    var adminAccount = new Account
+                    {
+                        Username = "admin",
+                        PasswordHash = HashPassword("123456"),
+                        Role = "Admin"
+                    };
+
+                    var employeeAccount = new Account
+                    {
+                        Username = "nvA",
+                        PasswordHash = HashPassword("123456"),
+                        Role = "Employee",
+                        EmployeeId = e1.Id
+                    };
+                    
+                    var thauPhuAccount = new Account
+                    {
+                        Username = "thauphuA",
+                        PasswordHash = HashPassword("123456"),
+                        Role = "Partner",
+                        EmployeeId = e3.Id
+                    };
+
+                    context.Accounts.AddRange(adminAccount, employeeAccount, thauPhuAccount);
+                    context.SaveChanges();
+                }
+            }
+        }
+
+        public static string HashPassword(string password)
+        {
+            using (var sha256 = System.Security.Cryptography.SHA256.Create())
+            {
+                var bytes = System.Text.Encoding.UTF8.GetBytes(password);
+                var hash = sha256.ComputeHash(bytes);
+                return Convert.ToBase64String(hash);
             }
         }
     }

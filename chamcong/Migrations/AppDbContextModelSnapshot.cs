@@ -22,6 +22,42 @@ namespace chamcong.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
+            modelBuilder.Entity("chamcong.Domain.Entities.Account", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int?>("EmployeeId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("PasswordHash")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
+
+                    b.Property<string>("Role")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("Username")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("EmployeeId");
+
+                    b.HasIndex("Username")
+                        .IsUnique();
+
+                    b.ToTable("Accounts");
+                });
+
             modelBuilder.Entity("chamcong.Domain.Entities.AttendanceLog", b =>
                 {
                     b.Property<int>("Id")
@@ -182,6 +218,39 @@ namespace chamcong.Migrations
                     b.ToTable("FingerprintLogs");
                 });
 
+            modelBuilder.Entity("chamcong.Domain.Entities.IssueReport", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("EmployeeId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("EmployeeId");
+
+                    b.ToTable("IssueReports");
+                });
+
             modelBuilder.Entity("chamcong.Domain.Entities.Product", b =>
                 {
                     b.Property<int>("Id")
@@ -263,6 +332,15 @@ namespace chamcong.Migrations
                     b.ToTable("Workshops");
                 });
 
+            modelBuilder.Entity("chamcong.Domain.Entities.Account", b =>
+                {
+                    b.HasOne("chamcong.Domain.Entities.Employee", "Employee")
+                        .WithMany()
+                        .HasForeignKey("EmployeeId");
+
+                    b.Navigation("Employee");
+                });
+
             modelBuilder.Entity("chamcong.Domain.Entities.AttendanceLog", b =>
                 {
                     b.HasOne("chamcong.Domain.Entities.Employee", "Employee")
@@ -319,6 +397,17 @@ namespace chamcong.Migrations
                         .IsRequired();
 
                     b.Navigation("Workshop");
+                });
+
+            modelBuilder.Entity("chamcong.Domain.Entities.IssueReport", b =>
+                {
+                    b.HasOne("chamcong.Domain.Entities.Employee", "Employee")
+                        .WithMany()
+                        .HasForeignKey("EmployeeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Employee");
                 });
 
             modelBuilder.Entity("chamcong.Domain.Entities.ProductionLog", b =>

@@ -1,7 +1,32 @@
 {
   "Version": 1,
   "WorkspaceRootPath": "C:\\chamcong\\chamcong\\chamcongver2\\",
-  "Documents": [],
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{103EB104-743C-4B30-B565-3CBBAE925856}|chamcong\\chamcong.csproj|c:\\chamcong\\chamcong\\chamcongver2\\chamcong\\application\\dtos\\miscdtos.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{103EB104-743C-4B30-B565-3CBBAE925856}|chamcong\\chamcong.csproj|solutionrelative:chamcong\\application\\dtos\\miscdtos.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{103EB104-743C-4B30-B565-3CBBAE925856}|chamcong\\chamcong.csproj|c:\\chamcong\\chamcong\\chamcongver2\\chamcong\\application\\dtos\\batchdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{103EB104-743C-4B30-B565-3CBBAE925856}|chamcong\\chamcong.csproj|solutionrelative:chamcong\\application\\dtos\\batchdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{103EB104-743C-4B30-B565-3CBBAE925856}|chamcong\\chamcong.csproj|c:\\chamcong\\chamcong\\chamcongver2\\chamcong\\api\\controllers\\attendancescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{103EB104-743C-4B30-B565-3CBBAE925856}|chamcong\\chamcong.csproj|solutionrelative:chamcong\\api\\controllers\\attendancescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{103EB104-743C-4B30-B565-3CBBAE925856}|chamcong\\chamcong.csproj|c:\\chamcong\\chamcong\\chamcongver2\\chamcong\\infrastructure\\data\\dataseeder.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{103EB104-743C-4B30-B565-3CBBAE925856}|chamcong\\chamcong.csproj|solutionrelative:chamcong\\infrastructure\\data\\dataseeder.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{103EB104-743C-4B30-B565-3CBBAE925856}|chamcong\\chamcong.csproj|c:\\chamcong\\chamcong\\chamcongver2\\chamcong\\infrastructure\\data\\appdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{103EB104-743C-4B30-B565-3CBBAE925856}|chamcong\\chamcong.csproj|solutionrelative:chamcong\\infrastructure\\data\\appdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{103EB104-743C-4B30-B565-3CBBAE925856}|chamcong\\chamcong.csproj|c:\\chamcong\\chamcong\\chamcongver2\\chamcong\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{103EB104-743C-4B30-B565-3CBBAE925856}|chamcong\\chamcong.csproj|solutionrelative:chamcong\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
   "DocumentGroupContainers": [
     {
       "Orientation": 0,
@@ -9,7 +34,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": -1,
+          "SelectedChildIndex": 12,
           "Children": [
             {
               "$type": "Bookmark",
@@ -58,6 +83,79 @@
             {
               "$type": "Bookmark",
               "Name": "ST:0:0:{d78612c7-9962-4b83-95d9-268046dad23a}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "MiscDtos.cs",
+              "DocumentMoniker": "C:\\chamcong\\chamcong\\chamcongver2\\chamcong\\Application\\DTOs\\MiscDtos.cs",
+              "RelativeDocumentMoniker": "chamcong\\Application\\DTOs\\MiscDtos.cs",
+              "ToolTip": "C:\\chamcong\\chamcong\\chamcongver2\\chamcong\\Application\\DTOs\\MiscDtos.cs",
+              "RelativeToolTip": "chamcong\\Application\\DTOs\\MiscDtos.cs",
+              "ViewState": "AgIAABIAAAAAAAAAAAAywAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-06-17T04:52:48.415Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "BatchDto.cs",
+              "DocumentMoniker": "C:\\chamcong\\chamcong\\chamcongver2\\chamcong\\Application\\DTOs\\BatchDto.cs",
+              "RelativeDocumentMoniker": "chamcong\\Application\\DTOs\\BatchDto.cs",
+              "ToolTip": "C:\\chamcong\\chamcong\\chamcongver2\\chamcong\\Application\\DTOs\\BatchDto.cs",
+              "RelativeToolTip": "chamcong\\Application\\DTOs\\BatchDto.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-06-17T04:52:47.161Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "AttendancesController.cs",
+              "DocumentMoniker": "C:\\chamcong\\chamcong\\chamcongver2\\chamcong\\Api\\Controllers\\AttendancesController.cs",
+              "RelativeDocumentMoniker": "chamcong\\Api\\Controllers\\AttendancesController.cs",
+              "ToolTip": "C:\\chamcong\\chamcong\\chamcongver2\\chamcong\\Api\\Controllers\\AttendancesController.cs",
+              "RelativeToolTip": "chamcong\\Api\\Controllers\\AttendancesController.cs",
+              "ViewState": "AgIAAAMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-06-17T04:48:53.848Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "DataSeeder.cs",
+              "DocumentMoniker": "C:\\chamcong\\chamcong\\chamcongver2\\chamcong\\Infrastructure\\Data\\DataSeeder.cs",
+              "RelativeDocumentMoniker": "chamcong\\Infrastructure\\Data\\DataSeeder.cs",
+              "ToolTip": "C:\\chamcong\\chamcong\\chamcongver2\\chamcong\\Infrastructure\\Data\\DataSeeder.cs",
+              "RelativeToolTip": "chamcong\\Infrastructure\\Data\\DataSeeder.cs",
+              "ViewState": "AgIAAAUAAAAAAAAAAAAxwAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-06-17T04:48:29.192Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "AppDbContext.cs",
+              "DocumentMoniker": "C:\\chamcong\\chamcong\\chamcongver2\\chamcong\\Infrastructure\\Data\\AppDbContext.cs",
+              "RelativeDocumentMoniker": "chamcong\\Infrastructure\\Data\\AppDbContext.cs",
+              "ToolTip": "C:\\chamcong\\chamcong\\chamcongver2\\chamcong\\Infrastructure\\Data\\AppDbContext.cs",
+              "RelativeToolTip": "chamcong\\Infrastructure\\Data\\AppDbContext.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-06-17T04:48:28.241Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\chamcong\\chamcong\\chamcongver2\\chamcong\\Program.cs",
+              "RelativeDocumentMoniker": "chamcong\\Program.cs",
+              "ToolTip": "C:\\chamcong\\chamcong\\chamcongver2\\chamcong\\Program.cs",
+              "RelativeToolTip": "chamcong\\Program.cs",
+              "ViewState": "AgIAADoAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-06-17T04:48:05.752Z"
             }
           ]
         }

@@ -12,6 +12,8 @@ namespace chamcong.Application.Interfaces
         IGenericRepository<ProductionLog> ProductionLogs { get; }
         IGenericRepository<AttendanceLog> AttendanceLogs { get; }
         IGenericRepository<FingerprintLog> FingerprintLogs { get; }
+        IGenericRepository<Account> Accounts { get; }
+        IGenericRepository<IssueReport> IssueReports { get; }
         
         Task<int> SaveChangesAsync();
     }

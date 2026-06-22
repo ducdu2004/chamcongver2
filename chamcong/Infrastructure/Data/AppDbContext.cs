@@ -15,6 +15,8 @@ namespace chamcong.Infrastructure.Data
         public DbSet<ProductionLog> ProductionLogs { get; set; }
         public DbSet<AttendanceLog> AttendanceLogs { get; set; }
         public DbSet<FingerprintLog> FingerprintLogs { get; set; }
+        public DbSet<Account> Accounts { get; set; }
+        public DbSet<IssueReport> IssueReports { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -75,6 +77,11 @@ namespace chamcong.Infrastructure.Data
                 .HasIndex(e => e.FingerprintId)
                 .IsUnique()
                 .HasFilter("[FingerprintId] IS NOT NULL");
+
+            // Optional: Username should be unique
+            modelBuilder.Entity<Account>()
+                .HasIndex(a => a.Username)
+                .IsUnique();
         }
     }
 }
