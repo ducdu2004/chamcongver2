@@ -41,9 +41,48 @@ namespace chamcong.Application.Services
                 {
                     dto.ProductName = product.ProductName;
                 }
+                if (batchEntity.AssignedWorkshopId.HasValue)
+                {
+                    var workshop = await _unitOfWork.Workshops.GetByIdAsync(batchEntity.AssignedWorkshopId.Value);
+                    if (workshop != null)
+                    {
+                        dto.AssignedWorkshopName = workshop.Name;
+                    }
+                }
+                else
+                {
+                    dto.AssignedWorkshopName = "Xưởng nhà (Internal)";
+                }
+                
+                dto.ReceiveDate = batchEntity.ReceiveDate;
+                dto.ReceiverName = batchEntity.ReceiverName;
             }
 
             return Result<IEnumerable<BatchDto>>.Ok(result.Cast<BatchDto>());
+        }
+
+        public async Task<Result<BatchDto>> CreateBatchAsync(BatchCreateDto dto)
+        {
+            var product = await _unitOfWork.Products.GetByIdAsync(dto.ProductId);
+            if (product == null) return Result<BatchDto>.Failure("Sản phẩm không tồn tại", 404);
+
+            var batch = new Batch
+            {
+                ProductId = dto.ProductId,
+                Quantity = dto.Quantity,
+                UnitPrice = product.DefaultUnitPrice,
+                AssignedWorkshopId = dto.AssignedWorkshopId,
+                Status = 0, // New
+                ReceiveDate = DateTime.Now,
+                ReceiverName = dto.ReceiverName
+            };
+
+            await _unitOfWork.Batches.AddAsync(batch);
+            await _unitOfWork.SaveChangesAsync();
+
+            var resultDto = _mapper.Map<BatchDto>(batch);
+            resultDto.ProductName = product.ProductName;
+            return Result<BatchDto>.Created(resultDto);
         }
 
         public async Task<Result<BatchDto>> CreateSubBatchAsync(SubBatchCreateDto dto)
@@ -51,16 +90,14 @@ namespace chamcong.Application.Services
             var parentBatch = await _unitOfWork.Batches.GetByIdAsync(dto.ParentBatchId);
             if (parentBatch == null) return Result<BatchDto>.Failure("Parent batch not found", 404);
 
-            // BR01: Quantity logic. (Skipping deep check of all existing sub-batches for simplicity, but let's implement)
-            var existingSubBatches = await _unitOfWork.Batches.FindAsync(b => b.ParentBatchId == dto.ParentBatchId);
-            int currentAllocated = existingSubBatches.Sum(b => b.Quantity);
-            if (currentAllocated + dto.Quantity > parentBatch.Quantity)
+            // BR01: Quantity logic. parentBatch.Quantity is the REMAINING quantity
+            if (dto.Quantity > parentBatch.Quantity)
             {
-                return Result<BatchDto>.Failure("Sub-batch quantity exceeds parent batch capacity", 400);
+                return Result<BatchDto>.Failure("Sub-batch quantity exceeds remaining parent batch capacity", 400);
             }
 
             // BR02: Margin logic
-            if (dto.UnitPrice > parentBatch.UnitPrice)
+            if (parentBatch.UnitPrice > 0 && dto.UnitPrice > parentBatch.UnitPrice)
             {
                 return Result<BatchDto>.Failure("Sub-batch unit price cannot exceed parent unit price", 400);
             }
@@ -72,8 +109,14 @@ namespace chamcong.Application.Services
                 Quantity = dto.Quantity,
                 UnitPrice = dto.UnitPrice,
                 AssignedWorkshopId = dto.AssignedWorkshopId,
-                Status = 0 // New
+                Status = 0, // New
+                ReceiveDate = DateTime.Now,
+                ReceiverName = "Phân bổ thầu phụ"
             };
+
+            // Deduct from parent batch
+            parentBatch.Quantity -= dto.Quantity;
+            _unitOfWork.Batches.Update(parentBatch);
 
             await _unitOfWork.Batches.AddAsync(subBatch);
             await _unitOfWork.SaveChangesAsync();
@@ -108,6 +151,39 @@ namespace chamcong.Application.Services
             };
 
             return Result<ExportVoucherDto>.Ok(voucher);
+        }
+
+        public async Task<Result<IEnumerable<BatchEmployeeDto>>> GetEmployeesByBatchAsync(int batchId)
+        {
+            var batch = await _unitOfWork.Batches.GetByIdAsync(batchId);
+            if (batch == null) return Result<IEnumerable<BatchEmployeeDto>>.Failure("Batch not found", 404);
+
+            // Get all bundles for this batch
+            var bundles = await _unitOfWork.Bundles.FindAsync(b => b.BatchId == batchId);
+            var bundleIds = bundles.Select(b => b.Id).ToList();
+
+            if (!bundleIds.Any())
+            {
+                return Result<IEnumerable<BatchEmployeeDto>>.Ok(new List<BatchEmployeeDto>());
+            }
+
+            var productionLogs = await _unitOfWork.ProductionLogs.FindAsync(pl => pl.BundleId.HasValue && bundleIds.Contains(pl.BundleId.Value));
+            
+            // Need employees data
+            var employees = await _unitOfWork.Employees.GetAllAsync();
+
+            var result = productionLogs
+                .GroupBy(pl => pl.EmployeeId)
+                .Select(g => new BatchEmployeeDto
+                {
+                    EmployeeId = g.Key,
+                    EmployeeName = employees.FirstOrDefault(e => e.Id == g.Key)?.FullName ?? "Unknown",
+                    TotalBundles = g.Count(),
+                    TotalEarned = g.Sum(pl => pl.EarnedAmount)
+                })
+                .ToList();
+
+            return Result<IEnumerable<BatchEmployeeDto>>.Ok(result);
         }
     }
 }

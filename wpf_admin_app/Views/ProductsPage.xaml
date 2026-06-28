@@ -1,0 +1,40 @@
+<Page x:Class="chamcong.WpfAdmin.Views.ProductsPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      Title="Quản lý Sản phẩm">
+    <Grid Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Grid Margin="0,0,0,10">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="Danh sách Sản phẩm &amp; Định mức" FontSize="24" FontWeight="Bold" VerticalAlignment="Center" Margin="0,0,20,0"/>
+                <TextBox x:Name="txtSearchProduct" Width="200" Height="30" VerticalContentAlignment="Center" Padding="5,0" Tag="Tìm tên sản phẩm..."/>
+                <ComboBox x:Name="cbSearchDistributor" Width="180" Height="30" Margin="10,0,0,0" DisplayMemberPath="Name" SelectedValuePath="Id" VerticalContentAlignment="Center"/>
+                <Button Content="Tìm kiếm" Width="80" Height="30" Margin="10,0,0,0" Click="btnSearch_Click"/>
+            </StackPanel>
+
+            <Button Grid.Column="1" Content="Thêm Sản phẩm Mới" Background="#2ECC71" Foreground="White" BorderThickness="0" Padding="15,8" Click="btnAddProduct_Click"/>
+        </Grid>
+
+        <DataGrid x:Name="dgProducts" Grid.Row="1" AutoGenerateColumns="False" IsReadOnly="True" HeadersVisibility="Column" Background="White" RowHeight="40" AlternatingRowBackground="#F9F9F9">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="ID" Binding="{Binding Id}" Width="50"/>
+                <DataGridTextColumn Header="Mã SP" Binding="{Binding ProductCode}" Width="100"/>
+                <DataGridTextColumn Header="Tên Sản phẩm" Binding="{Binding ProductName}" Width="200"/>
+                <DataGridTextColumn Header="Nhà phân phối" Binding="{Binding DistributorName}" Width="150"/>
+                <DataGridTextColumn Header="Số lượng" Binding="{Binding Quantity}" Width="80"/>
+                <DataGridTextColumn Header="Đơn giá" Binding="{Binding DefaultUnitPrice, StringFormat={}{0:N0}}" Width="100"/>
+                <DataGridTextColumn Header="Size" Binding="{Binding Size}" Width="80"/>
+                <DataGridTextColumn Header="Danh mục" Binding="{Binding ProductCategoryName}" Width="*"/>
+            </DataGrid.Columns>
+        </DataGrid>
+    </Grid>
+</Page>

@@ -1,0 +1,117 @@
+<Window x:Class="chamcong.WpfAdmin.Views.CreateProductWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Tạo Sản phẩm mới" Height="650" Width="550" WindowStartupLocation="CenterScreen">
+    <Grid Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <TextBlock Text="Thông tin Sản phẩm" FontSize="18" FontWeight="Bold" Margin="0,0,0,15" Grid.Row="0"/>
+
+        <Grid Grid.Row="1" Margin="0,0,0,10">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="10"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <StackPanel Grid.Column="0">
+                <TextBlock Text="Mã Sản phẩm (Tự sinh):"/>
+                <TextBox x:Name="txtProductCode" Height="30" Margin="0,5,0,0" IsEnabled="False" Background="#F0F0F0" Text="-- Tự động sinh --" Foreground="#888"/>
+            </StackPanel>
+            
+            <StackPanel Grid.Column="2">
+                <TextBlock Text="Tên Sản phẩm:"/>
+                <TextBox x:Name="txtProductName" Height="30" Margin="0,5,0,0"/>
+            </StackPanel>
+        </Grid>
+
+        <Grid Grid.Row="2" Margin="0,0,0,15">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="10"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <StackPanel Grid.Column="0">
+                <TextBlock Text="Nhà phân phối:"/>
+                <ComboBox x:Name="cbDistributor" DisplayMemberPath="Name" SelectedValuePath="Id" Height="30" Margin="0,5,0,0"/>
+            </StackPanel>
+            
+            <StackPanel Grid.Column="2">
+                <TextBlock Text="Kích cỡ (Size):"/>
+                <TextBox x:Name="txtSize" Height="30" Margin="0,5,0,0"/>
+            </StackPanel>
+        </Grid>
+
+        <Grid Grid.Row="3" Margin="0,0,0,15">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="10"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <StackPanel Grid.Column="0">
+                <TextBlock Text="Số lượng:"/>
+                <TextBox x:Name="txtQuantity" Height="30" Margin="0,5,0,0" Text="0"/>
+            </StackPanel>
+            
+            <StackPanel Grid.Column="2">
+                <TextBlock Text="Đơn giá / SP:"/>
+                <TextBox x:Name="txtUnitPrice" Height="30" Margin="0,5,0,0" Text="0"/>
+            </StackPanel>
+        </Grid>
+
+        <Grid Grid.Row="4" Margin="0,0,0,15">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <StackPanel Grid.Column="0">
+                <TextBlock Text="Danh mục (Áo/Quần):"/>
+                <ComboBox x:Name="cbCategory" DisplayMemberPath="Name" SelectedValuePath="Id" Height="30" Margin="0,5,0,0" SelectionChanged="cbCategory_SelectionChanged"/>
+            </StackPanel>
+        </Grid>
+
+        <Separator Grid.Row="5" Margin="0,10"/>
+
+        <TextBlock Text="Định mức Bộ phận" FontSize="16" FontWeight="SemiBold" Margin="0,0,0,10" Grid.Row="6"/>
+
+        <Grid Grid.Row="7">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
+                <ComboBox x:Name="cbGarmentParts" DisplayMemberPath="Name" SelectedValuePath="Id" Width="200" Height="30" Margin="0,0,10,0"/>
+                <TextBlock Text="Số lượng:" VerticalAlignment="Center" Margin="0,0,5,0"/>
+                <TextBox x:Name="txtQtyPerProduct" Width="50" Height="30" Text="1" Margin="0,0,10,0" HorizontalContentAlignment="Center"/>
+                <Button Content="+ Thêm" Width="70" Background="#3498DB" Foreground="White" BorderThickness="0" Click="btnAddPart_Click"/>
+            </StackPanel>
+
+            <DataGrid x:Name="dgComponents" Grid.Row="1" AutoGenerateColumns="False" IsReadOnly="True" HeadersVisibility="Column">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Bộ phận" Binding="{Binding GarmentPartName}" Width="*"/>
+                    <DataGridTextColumn Header="Số lượng / SP" Binding="{Binding QuantityPerProduct}" Width="100"/>
+                    <DataGridTemplateColumn Width="60">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <Button Content="Xóa" Foreground="Red" Background="Transparent" BorderThickness="0" Click="btnRemovePart_Click"/>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                </DataGrid.Columns>
+            </DataGrid>
+        </Grid>
+
+        <Button x:Name="btnSave" Grid.Row="8" Content="Lưu Sản phẩm" Height="40" Margin="0,15,0,0" Background="#2ECC71" Foreground="White" BorderThickness="0" FontWeight="Bold" Click="btnSave_Click"/>
+    </Grid>
+</Window>

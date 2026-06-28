@@ -11,7 +11,19 @@ namespace chamcong.Domain.Entities
 
         public int EmployeeId { get; set; }
 
-        public int BundleId { get; set; }
+        public int? BundleId { get; set; }
+
+        public int? ProductId { get; set; }
+
+        public int? GarmentPartId { get; set; }
+
+        [StringLength(50)]
+        public string? SizeOrTable { get; set; }
+
+        public int Quantity { get; set; }
+
+        [Column(TypeName = "decimal(18,2)")]
+        public decimal UnitPrice { get; set; }
 
         public DateTime CompletedAt { get; set; }
 
@@ -23,6 +35,12 @@ namespace chamcong.Domain.Entities
         public Employee Employee { get; set; }
 
         [ForeignKey("BundleId")]
-        public Bundle Bundle { get; set; }
+        public Bundle? Bundle { get; set; }
+
+        [ForeignKey("ProductId")]
+        public Product? Product { get; set; }
+
+        [ForeignKey("GarmentPartId")]
+        public GarmentPart? GarmentPart { get; set; }
     }
 }

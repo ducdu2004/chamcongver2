@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("chamcong")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+d4f1f3bb001c7aa588851abf3ddeff386b0804aa")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+1e81f5772e3d0421108bac02396930ec30335ca4")]
 [assembly: System.Reflection.AssemblyProductAttribute("chamcong")]
 [assembly: System.Reflection.AssemblyTitleAttribute("chamcong")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

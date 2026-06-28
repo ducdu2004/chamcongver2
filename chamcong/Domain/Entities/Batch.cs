@@ -23,6 +23,11 @@ namespace chamcong.Domain.Entities
         // 0: New, 1: InProgress, 2: Completed
         public int Status { get; set; }
 
+        public DateTime ReceiveDate { get; set; } = DateTime.Now;
+
+        [MaxLength(200)]
+        public string? ReceiverName { get; set; }
+
         // Navigation properties
         [ForeignKey("ProductId")]
         public Product Product { get; set; }

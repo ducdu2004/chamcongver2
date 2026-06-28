@@ -42,6 +42,7 @@ builder.Services.AddScoped<IAttendanceService, AttendanceService>();
 builder.Services.AddScoped<IFingerprintService, FingerprintService>();
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IIssueReportService, IssueReportService>();
+builder.Services.AddScoped<IEmployeeService, EmployeeService>();
 
 // AutoMapper
 builder.Services.AddAutoMapper(typeof(WorkshopProfile));

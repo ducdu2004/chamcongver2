@@ -17,6 +17,12 @@ namespace chamcong.Infrastructure.Data
         public DbSet<FingerprintLog> FingerprintLogs { get; set; }
         public DbSet<Account> Accounts { get; set; }
         public DbSet<IssueReport> IssueReports { get; set; }
+        public DbSet<EmploymentHistory> EmploymentHistories { get; set; }
+
+        public DbSet<ProductCategory> ProductCategories { get; set; }
+        public DbSet<GarmentPart> GarmentParts { get; set; }
+        public DbSet<ProductComponent> ProductComponents { get; set; }
+        public DbSet<Distributor> Distributors { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -42,6 +48,36 @@ namespace chamcong.Infrastructure.Data
                 .HasForeignKey(b => b.ProductId)
                 .OnDelete(DeleteBehavior.Restrict);
 
+            modelBuilder.Entity<Product>()
+                .HasOne(p => p.ProductCategory)
+                .WithMany(pc => pc.Products)
+                .HasForeignKey(p => p.ProductCategoryId)
+                .OnDelete(DeleteBehavior.SetNull);
+
+            modelBuilder.Entity<Product>()
+                .HasOne(p => p.Distributor)
+                .WithMany(d => d.Products)
+                .HasForeignKey(p => p.DistributorId)
+                .OnDelete(DeleteBehavior.SetNull);
+
+            modelBuilder.Entity<GarmentPart>()
+                .HasOne(gp => gp.ProductCategory)
+                .WithMany(pc => pc.GarmentParts)
+                .HasForeignKey(gp => gp.ProductCategoryId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<ProductComponent>()
+                .HasOne(pc => pc.Product)
+                .WithMany(p => p.ProductComponents)
+                .HasForeignKey(pc => pc.ProductId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<ProductComponent>()
+                .HasOne(pc => pc.GarmentPart)
+                .WithMany(gp => gp.ProductComponents)
+                .HasForeignKey(pc => pc.GarmentPartId)
+                .OnDelete(DeleteBehavior.Restrict);
+
             modelBuilder.Entity<Batch>()
                 .HasOne(b => b.AssignedWorkshop)
                 .WithMany()
@@ -64,6 +100,21 @@ namespace chamcong.Infrastructure.Data
                 .HasOne(p => p.Bundle)
                 .WithOne(b => b.ProductionLog)
                 .HasForeignKey<ProductionLog>(p => p.BundleId)
+                .IsRequired(false)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<ProductionLog>()
+                .HasOne(p => p.Product)
+                .WithMany()
+                .HasForeignKey(p => p.ProductId)
+                .IsRequired(false)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<ProductionLog>()
+                .HasOne(p => p.GarmentPart)
+                .WithMany()
+                .HasForeignKey(p => p.GarmentPartId)
+                .IsRequired(false)
                 .OnDelete(DeleteBehavior.Restrict);
 
             modelBuilder.Entity<AttendanceLog>()
@@ -71,6 +122,12 @@ namespace chamcong.Infrastructure.Data
                 .WithMany(e => e.AttendanceLogs)
                 .HasForeignKey(a => a.EmployeeId)
                 .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<EmploymentHistory>()
+                .HasOne(eh => eh.Employee)
+                .WithMany(e => e.EmploymentHistories)
+                .HasForeignKey(eh => eh.EmployeeId)
+                .OnDelete(DeleteBehavior.Cascade);
 
             // FingerprintId should be Unique
             modelBuilder.Entity<Employee>()

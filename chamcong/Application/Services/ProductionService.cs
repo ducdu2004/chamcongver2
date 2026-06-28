@@ -1,4 +1,5 @@
 using chamcong.Application.Common;
+using chamcong.Application.DTOs;
 using chamcong.Application.Interfaces;
 using chamcong.Domain.Entities;
 
@@ -64,6 +65,65 @@ namespace chamcong.Application.Services
             await _unitOfWork.SaveChangesAsync();
 
             return Result.Ok("Bundle completed successfully");
+        }
+
+        public async Task<Result> AddManualProductionLogAsync(ManualProductionCreateDto dto)
+        {
+            var productionLog = new ProductionLog
+            {
+                EmployeeId = dto.EmployeeId,
+                ProductId = dto.ProductId,
+                GarmentPartId = dto.GarmentPartId,
+                SizeOrTable = dto.SizeOrTable,
+                Quantity = dto.Quantity,
+                UnitPrice = dto.UnitPrice,
+                EarnedAmount = dto.Quantity * dto.UnitPrice,
+                CompletedAt = DateTime.Now
+            };
+
+            await _unitOfWork.ProductionLogs.AddAsync(productionLog);
+            await _unitOfWork.SaveChangesAsync();
+
+            return Result.Ok("Đã ghi nhận công thành công");
+        }
+
+        public async Task<Result<IEnumerable<ManualProductionDto>>> GetManualProductionLogsAsync(int employeeId, DateTime date)
+        {
+            var logs = await _unitOfWork.ProductionLogs.FindAsync(p => p.EmployeeId == employeeId && p.CompletedAt.Date == date.Date && !p.BundleId.HasValue);
+            
+            var result = new List<ManualProductionDto>();
+            foreach(var log in logs)
+            {
+                string productName = "N/A";
+                string partName = "N/A";
+
+                if (log.ProductId.HasValue)
+                {
+                    var product = await _unitOfWork.Products.GetByIdAsync(log.ProductId.Value);
+                    if (product != null) productName = product.ProductName;
+                }
+
+                if (log.GarmentPartId.HasValue)
+                {
+                    var part = await _unitOfWork.GarmentParts.GetByIdAsync(log.GarmentPartId.Value);
+                    if (part != null) partName = part.Name;
+                }
+
+                result.Add(new ManualProductionDto
+                {
+                    Id = log.Id,
+                    EmployeeId = log.EmployeeId,
+                    ProductName = productName,
+                    GarmentPartName = partName,
+                    SizeOrTable = log.SizeOrTable,
+                    Quantity = log.Quantity,
+                    UnitPrice = log.UnitPrice,
+                    EarnedAmount = log.EarnedAmount,
+                    CompletedAt = log.CompletedAt
+                });
+            }
+
+            return Result<IEnumerable<ManualProductionDto>>.Ok(result.OrderByDescending(r => r.CompletedAt));
         }
     }
 }

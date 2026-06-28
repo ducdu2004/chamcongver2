@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import 'config.dart';
 
 void main() {
   runApp(const MyApp());
@@ -35,8 +36,8 @@ class _LoginScreenState extends State<LoginScreen> {
   
   bool _isLoading = false;
   
-  // Link Ngrok tự động được chèn
-  final String apiUrl = "https://exposable-shorter-catnap.ngrok-free.dev/api/auth/login";
+  // Đọc link API từ file config.dart
+  final String apiUrl = "${Config.baseUrl}/api/auth/login";
 
   Future<void> _handleLogin() async {
     setState(() {

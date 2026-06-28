@@ -18,6 +18,8 @@ namespace chamcong.Infrastructure.UnitOfWork
         private IGenericRepository<FingerprintLog>? _fingerprintLogs;
         private IGenericRepository<Account>? _accounts;
         private IGenericRepository<IssueReport>? _issueReports;
+        private IGenericRepository<EmploymentHistory>? _employmentHistories;
+        private IGenericRepository<GarmentPart>? _garmentParts;
 
         public UnitOfWork(AppDbContext context)
         {
@@ -34,6 +36,8 @@ namespace chamcong.Infrastructure.UnitOfWork
         public IGenericRepository<FingerprintLog> FingerprintLogs => _fingerprintLogs ??= new GenericRepository<FingerprintLog>(_context);
         public IGenericRepository<Account> Accounts => _accounts ??= new GenericRepository<Account>(_context);
         public IGenericRepository<IssueReport> IssueReports => _issueReports ??= new GenericRepository<IssueReport>(_context);
+        public IGenericRepository<EmploymentHistory> EmploymentHistories => _employmentHistories ??= new GenericRepository<EmploymentHistory>(_context);
+        public IGenericRepository<GarmentPart> GarmentParts => _garmentParts ??= new GenericRepository<GarmentPart>(_context);
 
         public async Task<int> SaveChangesAsync()
         {

@@ -1,0 +1,84 @@
+<Window x:Class="chamcong.WpfAdmin.Views.AttendanceSheetWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Bảng Chấm Công Chi Tiết" Height="600" Width="900" WindowStartupLocation="CenterScreen">
+    
+    <Grid Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <StackPanel Orientation="Horizontal" Margin="0,0,0,20">
+            <TextBlock Text="Bảng Chấm Công - Tháng: " FontSize="20" FontWeight="Bold"/>
+            <ComboBox x:Name="cboMonth" Width="80" Margin="10,0" FontSize="16" SelectionChanged="cboDate_SelectionChanged"/>
+            <TextBlock Text="Năm: " FontSize="20" FontWeight="Bold" Margin="10,0,0,0"/>
+            <ComboBox x:Name="cboYear" Width="100" Margin="10,0" FontSize="16" SelectionChanged="cboDate_SelectionChanged"/>
+        </StackPanel>
+
+        <Grid Grid.Row="1" Margin="0,0,0,10">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <!-- Calendar Headers -->
+            <TextBlock Grid.Column="0" Text="Thứ 2" FontWeight="Bold" HorizontalAlignment="Center"/>
+            <TextBlock Grid.Column="1" Text="Thứ 3" FontWeight="Bold" HorizontalAlignment="Center"/>
+            <TextBlock Grid.Column="2" Text="Thứ 4" FontWeight="Bold" HorizontalAlignment="Center"/>
+            <TextBlock Grid.Column="3" Text="Thứ 5" FontWeight="Bold" HorizontalAlignment="Center"/>
+            <TextBlock Grid.Column="4" Text="Thứ 6" FontWeight="Bold" HorizontalAlignment="Center"/>
+            <TextBlock Grid.Column="5" Text="Thứ 7" FontWeight="Bold" HorizontalAlignment="Center"/>
+            <TextBlock Grid.Column="6" Text="Chủ nhật" FontWeight="Bold" HorizontalAlignment="Center" Foreground="Red"/>
+        </Grid>
+
+        <ScrollViewer Grid.Row="2" VerticalScrollBarVisibility="Auto">
+            <ItemsControl x:Name="icCalendar">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <UniformGrid Columns="7" />
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Border BorderBrush="#BDC3C7" BorderThickness="1" Margin="2" Height="100">
+                            <Border.Style>
+                                <Style TargetType="Border">
+                                    <Setter Property="Background" Value="White"/>
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding IsWeekend}" Value="True">
+                                            <Setter Property="Background" Value="#FFEEEEEE"/>
+                                        </DataTrigger>
+                                        <DataTrigger Binding="{Binding DayText}" Value="">
+                                            <Setter Property="Background" Value="Transparent"/>
+                                            <Setter Property="BorderThickness" Value="0"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Border.Style>
+                            <Grid Margin="5">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="*"/>
+                                </Grid.RowDefinitions>
+                                
+                                <TextBlock Text="{Binding DayText}" FontWeight="Bold" FontSize="16" HorizontalAlignment="Right"/>
+                                
+                                <StackPanel Grid.Row="1" VerticalAlignment="Bottom">
+                                    <TextBlock Text="{Binding CheckInText, StringFormat='Vào: \{0\}'}" FontSize="12" Foreground="Green" FontWeight="SemiBold"/>
+                                    <TextBlock Text="{Binding CheckOutText, StringFormat='Ra: \{0\}'}" FontSize="12" Foreground="#D35400" FontWeight="SemiBold"/>
+                                    <TextBlock Text="{Binding OvertimeText, StringFormat='Tăng ca: \{0\}'}" FontSize="12" Foreground="Blue" FontWeight="Bold"/>
+                                </StackPanel>
+                            </Grid>
+                        </Border>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </ScrollViewer>
+    </Grid>
+</Window>

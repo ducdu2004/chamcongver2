@@ -1,0 +1,38 @@
+<Window x:Class="chamcong.WpfAdmin.Views.CreateDistributorWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Nhà phân phối" Height="380" Width="450" WindowStartupLocation="CenterOwner" Background="White">
+    <Grid Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <TextBlock Text="Thông tin Nhà phân phối" FontSize="18" FontWeight="Bold" Margin="0,0,0,15"/>
+
+        <TextBlock Grid.Row="1" Text="Tên Nhà phân phối: *" Foreground="#555" Margin="0,0,0,5"/>
+        <TextBox x:Name="txtName" Grid.Row="2" Height="30" Margin="0,0,0,10" VerticalContentAlignment="Center" Padding="5,0"/>
+
+        <TextBlock Grid.Row="3" Text="Số điện thoại:" Foreground="#555" Margin="0,0,0,5"/>
+        <TextBox x:Name="txtPhone" Grid.Row="4" Height="30" Margin="0,0,0,10" VerticalContentAlignment="Center" Padding="5,0"/>
+
+        <TextBlock Grid.Row="5" Text="Email:" Foreground="#555" Margin="0,0,0,5"/>
+        <TextBox x:Name="txtEmail" Grid.Row="6" Height="30" Margin="0,0,0,10" VerticalContentAlignment="Center" Padding="5,0"/>
+
+        <TextBlock Grid.Row="7" Text="Địa chỉ:" Foreground="#555" Margin="0,0,0,5"/>
+        <TextBox x:Name="txtAddress" Grid.Row="8" Height="30" Margin="0,0,0,20" VerticalContentAlignment="Center" Padding="5,0"/>
+
+        <StackPanel Grid.Row="9" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Bottom">
+            <Button Content="Hủy" Width="80" Height="35" Margin="0,0,10,0" Background="#95A5A6" Foreground="White" BorderThickness="0" Click="btnCancel_Click"/>
+            <Button Content="Lưu" Width="100" Height="35" Background="#2ECC71" Foreground="White" BorderThickness="0" Click="btnSave_Click"/>
+        </StackPanel>
+    </Grid>
+</Window>

@@ -38,12 +38,32 @@ namespace chamcong.Api.Controllers
             return result.Success ? Ok(result.Data) : StatusCode(result.StatusCode, result.Message);
         }
 
+        [HttpPost]
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> CreateBatch([FromBody] BatchCreateDto dto)
+        {
+            if (string.IsNullOrEmpty(dto.ReceiverName))
+            {
+                dto.ReceiverName = User.Identity?.Name ?? "Admin";
+            }
+            var result = await _batchService.CreateBatchAsync(dto);
+            return result.Success ? StatusCode(result.StatusCode, result.Data) : StatusCode(result.StatusCode, result.Message);
+        }
+
         [HttpPost("sub-batch")]
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> CreateSubBatch([FromBody] SubBatchCreateDto dto)
         {
             var result = await _batchService.CreateSubBatchAsync(dto);
             return result.Success ? StatusCode(result.StatusCode, result.Data) : StatusCode(result.StatusCode, result.Message);
+        }
+
+        [HttpGet("{id}/employees")]
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> GetEmployeesByBatch(int id)
+        {
+            var result = await _batchService.GetEmployeesByBatchAsync(id);
+            return result.Success ? Ok(result.Data) : StatusCode(result.StatusCode, result.Message);
         }
     }
 }

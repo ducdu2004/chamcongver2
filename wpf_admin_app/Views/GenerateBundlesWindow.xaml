@@ -1,0 +1,36 @@
+<Window x:Class="chamcong.WpfAdmin.Views.GenerateBundlesWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Phát sinh Bó Hàng" Height="400" Width="400" WindowStartupLocation="CenterScreen">
+    <Grid Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <TextBlock x:Name="lblBatchInfo" Grid.Row="0" FontWeight="Bold" Margin="0,0,0,15"/>
+
+        <TextBlock Text="Số bó cần tạo:" Grid.Row="1" Margin="0,0,0,5"/>
+        <TextBox x:Name="txtNumBundles" Grid.Row="2" Height="30" Margin="0,0,0,15"/>
+
+        <TextBlock Text="Tên Công đoạn (vd: May cổ áo):" Grid.Row="3" Margin="0,0,0,5"/>
+        <TextBox x:Name="txtStepName" Grid.Row="4" Height="30" Margin="0,0,0,15"/>
+
+        <TextBlock Text="Đơn giá Công đoạn (VNĐ):" Grid.Row="5" Margin="0,0,0,5"/>
+        <TextBox x:Name="txtStepPrice" Grid.Row="6" Height="30" Margin="0,0,0,15"/>
+
+        <TextBlock Text="Số lượng sản phẩm / Bó:" Grid.Row="7" Margin="0,0,0,5"/>
+        <TextBox x:Name="txtQtyPerBundle" Grid.Row="8" Height="30" Margin="0,0,0,15"/>
+
+        <Button x:Name="btnSave" Grid.Row="10" Content="Phát sinh Bó" Height="35" Width="100" Background="#9B59B6" Foreground="White" BorderThickness="0" HorizontalAlignment="Right" Click="btnSave_Click"/>
+    </Grid>
+</Window>

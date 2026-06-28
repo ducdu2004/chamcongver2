@@ -108,6 +108,13 @@ namespace chamcong.Migrations
                     b.Property<int>("Quantity")
                         .HasColumnType("int");
 
+                    b.Property<DateTime>("ReceiveDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("ReceiverName")
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
                     b.Property<int>("Status")
                         .HasColumnType("int");
 
@@ -160,6 +167,39 @@ namespace chamcong.Migrations
                     b.ToTable("Bundles");
                 });
 
+            modelBuilder.Entity("chamcong.Domain.Entities.Distributor", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Address")
+                        .IsRequired()
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.Property<string>("Phone")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Distributors");
+                });
+
             modelBuilder.Entity("chamcong.Domain.Entities.Employee", b =>
                 {
                     b.Property<int>("Id")
@@ -167,6 +207,10 @@ namespace chamcong.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Email")
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("FingerprintId")
                         .HasMaxLength(50)
@@ -177,8 +221,18 @@ namespace chamcong.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
+                    b.Property<decimal>("HourlyWage")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal>("OvertimeHourlyWage")
+                        .HasColumnType("decimal(18,2)");
+
                     b.Property<int>("PayType")
                         .HasColumnType("int");
+
+                    b.Property<string>("Phone")
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
 
                     b.Property<int>("WorkshopId")
                         .HasColumnType("int");
@@ -192,6 +246,34 @@ namespace chamcong.Migrations
                     b.HasIndex("WorkshopId");
 
                     b.ToTable("Employees");
+                });
+
+            modelBuilder.Entity("chamcong.Domain.Entities.EmploymentHistory", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("EmployeeId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("EndDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("ReasonForLeaving")
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
+
+                    b.Property<DateTime>("StartDate")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("EmployeeId");
+
+                    b.ToTable("EmploymentHistories");
                 });
 
             modelBuilder.Entity("chamcong.Domain.Entities.FingerprintLog", b =>
@@ -216,6 +298,32 @@ namespace chamcong.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("FingerprintLogs");
+                });
+
+            modelBuilder.Entity("chamcong.Domain.Entities.GarmentPart", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<decimal>("DefaultUnitPrice")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<int>("ProductCategoryId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProductCategoryId");
+
+                    b.ToTable("GarmentParts");
                 });
 
             modelBuilder.Entity("chamcong.Domain.Entities.IssueReport", b =>
@@ -262,6 +370,12 @@ namespace chamcong.Migrations
                     b.Property<decimal>("DefaultUnitPrice")
                         .HasColumnType("decimal(18,2)");
 
+                    b.Property<int?>("DistributorId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("ProductCategoryId")
+                        .HasColumnType("int");
+
                     b.Property<string>("ProductCode")
                         .IsRequired()
                         .HasMaxLength(50)
@@ -272,9 +386,65 @@ namespace chamcong.Migrations
                         .HasMaxLength(200)
                         .HasColumnType("nvarchar(200)");
 
+                    b.Property<int>("Quantity")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Size")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
                     b.HasKey("Id");
 
+                    b.HasIndex("DistributorId");
+
+                    b.HasIndex("ProductCategoryId");
+
                     b.ToTable("Products");
+                });
+
+            modelBuilder.Entity("chamcong.Domain.Entities.ProductCategory", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("ProductCategories");
+                });
+
+            modelBuilder.Entity("chamcong.Domain.Entities.ProductComponent", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("GarmentPartId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ProductId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("QuantityPerProduct")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("GarmentPartId");
+
+                    b.HasIndex("ProductId");
+
+                    b.ToTable("ProductComponents");
                 });
 
             modelBuilder.Entity("chamcong.Domain.Entities.ProductionLog", b =>
@@ -285,7 +455,7 @@ namespace chamcong.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("BundleId")
+                    b.Property<int?>("BundleId")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("CompletedAt")
@@ -297,12 +467,33 @@ namespace chamcong.Migrations
                     b.Property<int>("EmployeeId")
                         .HasColumnType("int");
 
+                    b.Property<int?>("GarmentPartId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("ProductId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("int");
+
+                    b.Property<string>("SizeOrTable")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<decimal>("UnitPrice")
+                        .HasColumnType("decimal(18,2)");
+
                     b.HasKey("Id");
 
                     b.HasIndex("BundleId")
-                        .IsUnique();
+                        .IsUnique()
+                        .HasFilter("[BundleId] IS NOT NULL");
 
                     b.HasIndex("EmployeeId");
+
+                    b.HasIndex("GarmentPartId");
+
+                    b.HasIndex("ProductId");
 
                     b.ToTable("ProductionLogs");
                 });
@@ -399,6 +590,28 @@ namespace chamcong.Migrations
                     b.Navigation("Workshop");
                 });
 
+            modelBuilder.Entity("chamcong.Domain.Entities.EmploymentHistory", b =>
+                {
+                    b.HasOne("chamcong.Domain.Entities.Employee", "Employee")
+                        .WithMany("EmploymentHistories")
+                        .HasForeignKey("EmployeeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Employee");
+                });
+
+            modelBuilder.Entity("chamcong.Domain.Entities.GarmentPart", b =>
+                {
+                    b.HasOne("chamcong.Domain.Entities.ProductCategory", "ProductCategory")
+                        .WithMany("GarmentParts")
+                        .HasForeignKey("ProductCategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("ProductCategory");
+                });
+
             modelBuilder.Entity("chamcong.Domain.Entities.IssueReport", b =>
                 {
                     b.HasOne("chamcong.Domain.Entities.Employee", "Employee")
@@ -410,13 +623,48 @@ namespace chamcong.Migrations
                     b.Navigation("Employee");
                 });
 
+            modelBuilder.Entity("chamcong.Domain.Entities.Product", b =>
+                {
+                    b.HasOne("chamcong.Domain.Entities.Distributor", "Distributor")
+                        .WithMany("Products")
+                        .HasForeignKey("DistributorId")
+                        .OnDelete(DeleteBehavior.SetNull);
+
+                    b.HasOne("chamcong.Domain.Entities.ProductCategory", "ProductCategory")
+                        .WithMany("Products")
+                        .HasForeignKey("ProductCategoryId")
+                        .OnDelete(DeleteBehavior.SetNull);
+
+                    b.Navigation("Distributor");
+
+                    b.Navigation("ProductCategory");
+                });
+
+            modelBuilder.Entity("chamcong.Domain.Entities.ProductComponent", b =>
+                {
+                    b.HasOne("chamcong.Domain.Entities.GarmentPart", "GarmentPart")
+                        .WithMany("ProductComponents")
+                        .HasForeignKey("GarmentPartId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("chamcong.Domain.Entities.Product", "Product")
+                        .WithMany("ProductComponents")
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("GarmentPart");
+
+                    b.Navigation("Product");
+                });
+
             modelBuilder.Entity("chamcong.Domain.Entities.ProductionLog", b =>
                 {
                     b.HasOne("chamcong.Domain.Entities.Bundle", "Bundle")
                         .WithOne("ProductionLog")
                         .HasForeignKey("chamcong.Domain.Entities.ProductionLog", "BundleId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("chamcong.Domain.Entities.Employee", "Employee")
                         .WithMany("ProductionLogs")
@@ -424,9 +672,23 @@ namespace chamcong.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
+                    b.HasOne("chamcong.Domain.Entities.GarmentPart", "GarmentPart")
+                        .WithMany()
+                        .HasForeignKey("GarmentPartId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("chamcong.Domain.Entities.Product", "Product")
+                        .WithMany()
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
                     b.Navigation("Bundle");
 
                     b.Navigation("Employee");
+
+                    b.Navigation("GarmentPart");
+
+                    b.Navigation("Product");
                 });
 
             modelBuilder.Entity("chamcong.Domain.Entities.Batch", b =>
@@ -441,16 +703,37 @@ namespace chamcong.Migrations
                     b.Navigation("ProductionLog");
                 });
 
+            modelBuilder.Entity("chamcong.Domain.Entities.Distributor", b =>
+                {
+                    b.Navigation("Products");
+                });
+
             modelBuilder.Entity("chamcong.Domain.Entities.Employee", b =>
                 {
                     b.Navigation("AttendanceLogs");
 
+                    b.Navigation("EmploymentHistories");
+
                     b.Navigation("ProductionLogs");
+                });
+
+            modelBuilder.Entity("chamcong.Domain.Entities.GarmentPart", b =>
+                {
+                    b.Navigation("ProductComponents");
                 });
 
             modelBuilder.Entity("chamcong.Domain.Entities.Product", b =>
                 {
                     b.Navigation("Batches");
+
+                    b.Navigation("ProductComponents");
+                });
+
+            modelBuilder.Entity("chamcong.Domain.Entities.ProductCategory", b =>
+                {
+                    b.Navigation("GarmentParts");
+
+                    b.Navigation("Products");
                 });
 
             modelBuilder.Entity("chamcong.Domain.Entities.Workshop", b =>
